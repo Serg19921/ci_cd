@@ -14,7 +14,7 @@ on:
 
 jobs:
   jmeter-test:
-    runs-on: self-hosted  # этот тег должен совпадать с тегом твоего runner'а (по умолчанию self-hosted)
+    runs-on: self-hosted
 
     steps:
       - name: Checkout repo
@@ -27,10 +27,10 @@ jobs:
           java-version: '11'
 
       - name: Run JMeter test
-  shell: powershell
-  run: |
-    & "C:\Users\SergBat\Desktop\программы\apache-jmeter-5.6.3\bin\jmeter.bat" -n `
-      -t "$env:GITHUB_WORKSPACE\jmeter\test.jmx" `
-      -l "$env:GITHUB_WORKSPACE\jmeter\results.jtl" `
-      -Jusers=${{ github.event.inputs.users }} `
-      -Jduration=${{ github.event.inputs.duration }}
+        shell: powershell
+        run: |
+          & "C:\Users\SergBat\Desktop\программы\apache-jmeter-5.6.3\bin\jmeter.bat" -n `
+            -t "$env:GITHUB_WORKSPACE\jmeter\test.jmx" `
+            -l "$env:GITHUB_WORKSPACE\jmeter\results.jtl" `
+            -Jusers=${{ github.event.inputs.users }} `
+            -Jduration=${{ github.event.inputs.duration }}

@@ -29,4 +29,4 @@ jobs:
       - name: Run JMeter test
         shell: powershell
         run: |
-          & "C:\Users\SergBat\Desktop\программы\apache-jmeter-5.6.3\bin\jmeter.bat" -n -t "$env:GITHUB_WORKSPACE\jmeter\test.jmx" -l "$env:GITHUB_WORKSPACE\jmeter\results.jtl" -Jusers=${{ github.event.inputs.users }} -Jduration=${{ github.event.inputs.duration }}
+          & "C:\Users\SergBat\Desktop\programs\apache-jmeter-5.6.3\bin\jmeter.bat" -n -t "$env:GITHUB_WORKSPACE\jmeter\test.jmx" -l "$env:GITHUB_WORKSPACE\jmeter\results.jtl" -Jusers=${{ github.event.inputs.users }} -Jduration=${{ github.event.inputs.duration }}

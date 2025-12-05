@@ -1,0 +1,34 @@
+name: JMeter Load Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      users:
+        description: "Количество виртуальных пользователей"
+        required: true
+        default: "10"
+      duration:
+        description: "Длительность теста (секунды)"
+        required: true
+        default: "60"
+
+jobs:
+  jmeter-test:
+    runs-on: self-hosted  # этот тег должен совпадать с тегом твоего runner'а (по умолчанию self-hosted)
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Run JMeter test
+        run: |
+          jmeter -n -t jmeter/test.jmx \
+                 -l jmeter/results.jtl \
+                 -Jusers=${{ github.event.inputs.users }} \
+                 -Jduration=${{ github.event.inputs.duration }}

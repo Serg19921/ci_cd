@@ -1,0 +1,11 @@
+﻿{
+  "agentId": 23,
+  "agentName": "DESKTOP-724TTEL",
+  "poolId": 1,
+  "poolName": "Default",
+  "serverUrl": "https://pipelinesghubeus22.actions.githubusercontent.com/jLvApoyYSXLRYdcyRqECEdzHReGln2h8R74Ih88UnZ9B1Bopup/",
+  "gitHubUrl": "https://github.com/Serg19921/ci_cd",
+  "workFolder": "_work",
+  "useV2Flow": true,
+  "serverUrlV2": "https://broker.actions.githubusercontent.com/"
+}

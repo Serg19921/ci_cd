@@ -4,26 +4,45 @@ on:
   workflow_dispatch:
     inputs:
       users:
-        description: "Number of users"
+        description: "Количество виртуальных пользователей"
         required: true
         default: "10"
       duration:
-        description: "Duration in seconds"
+        description: "Длительность теста (секунды)"
         required: true
         default: "60"
 
 jobs:
-  load-test:
-    runs-on: self-hosted   # твой локальный раннер на Windows
+  jmeter-test:
+    runs-on: self-hosted
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
       - name: Run JMeter test
+        shell: powershell
         run: |
-          mkdir results
-          jmeter -n -t jmeter/test.jmx -Jusers=${{ github.event.inputs.users }} -Jduration=${{ github.event.inputs.duration }} -l results/results.jtl -j results/jmeter.log -e -o results/report
+          # Папка для результатов в корне репо
+          $resultsPath = "$env:GITHUB_WORKSPACE\results"
+          New-Item -ItemType Directory -Force -Path $resultsPath | Out-Null
+
+          # Запуск JMeter со сценарием jmeter/test.jmx
+          & "C:\Users\SergBat\Desktop\programs\apache-jmeter-5.6.3\bin\jmeter.bat" `
+            -n `
+            -t "$env:GITHUB_WORKSPACE\jmeter\test.jmx" `
+            -l "$resultsPath\results.jtl" `
+            -j "$resultsPath\jmeter.log" `
+            -Jusers=${{ github.event.inputs.users }} `
+            -Jduration=${{ github.event.inputs.duration }} `
+            -e `
+            -o "$resultsPath\report"
 
       - name: Upload JMeter results
         uses: actions/upload-artifact@v4
